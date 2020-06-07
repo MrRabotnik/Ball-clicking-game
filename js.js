@@ -99,8 +99,12 @@ function flyingBall(e){
 				count++
 				if(e.clientX < X + ballWidth/2){
 					toright = 1
+					$(ball).addClass("rotateRight")
+					$(ball).removeClass("rotateLeft")
 				}else if(e.clientX > X + ballWidth/2){
 					toright = -1
+					$(ball).addClass("rotateLeft")
+					$(ball).removeClass("rotateRight")
 				}
 				$('.counter').text(count)
 				clearInterval(movingBallDown)
@@ -125,12 +129,12 @@ function stop(){
 	clearInterval(movingBallUp)
 	clearInterval(movingBallDown)
 	clearTimeout(startingToFall)
-	$(ball).css({
-		top: "10%",
-		left:"40%",
-	});
 	X = Math.floor(Math.random() * (WW - ballWidth - 10) + ballWidth + 10)
 	Y = 50
+	$(ball).css({
+		top: "10%",
+		left:`${X}px`,
+	});
 }
 
 
