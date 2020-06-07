@@ -7,7 +7,7 @@ var WH = $(window).height()
 var startClicked = false
 var ball = $(".ball_container");
 var Y = 50;
-var X = Math.floor(Math.random() * (WW - ballWidth - 10) + ballWidth + 10);
+var X = Math.floor(Math.random() * WW/2 + ballWidth)
 var startingToFall;
 var count = 0;
 var ballWidth = $(ball).width()
@@ -15,15 +15,16 @@ var comingBack = false
 var toright = 0
 var leftWallHit = false
 var rightWallHit = false
-
+var fallingSpeed;
 
 function start(){
-	$('.counter').text(count)
-	count = 0
-	$(".you_lost").text("")
-	clearInterval(movingBallDown)
+	$('.counter').text(count);
+	count = 0;
+	$(".result").text("");
+	clearInterval(movingBallDown);
 	movingBallDown = setInterval(fallOnce,5);
 	startClicked = true;
+	fallingSpeed = 0
 };
 
 
@@ -33,7 +34,8 @@ function fallOnce(){
 			top: `${Y}px`,
 			left:`${X}px`,
 		});
-		Y += 2;
+		Y += fallingSpeed;
+		fallingSpeed += 0.015
 		comingBack = true
 	}else{
 		$(".result").text("Well...you lost")
@@ -51,7 +53,8 @@ function moveDown(){
 			top: `${Y}px`,
 			left:`${X}px`,
 		});
-		Y += 2;
+		Y += fallingSpeed;
+		fallingSpeed += 0.015
 		checkingWalls()
 		if(toright == 1){
 			X += 1
@@ -72,8 +75,12 @@ function moveDown(){
 function checkingWalls(){
 	if(X < 1){
 		toright = 1
+		$(ball).addClass("rotateRight")
+		$(ball).removeClass("rotateLeft")
 	}else if(X > WW - ballWidth - 5){
 		toright = -1
+		$(ball).addClass("rotateLeft")
+		$(ball).removeClass("rotateRight")
 	}
 }
 
@@ -82,7 +89,8 @@ function moveUp(){
 		top: `${Y}px`,
 		left:`${X}px`,
 	});
-	Y -= 2;
+	Y -= fallingSpeed;
+	fallingSpeed -= 0.015
 	checkingWalls()
 	if(toright == 1){
 		X += 1
@@ -124,17 +132,19 @@ function flyingBall(e){
 
 function stop(){
 	startClicked = false;
+	$(".you_lost").text("")
 	$('.counter').text(count)
 	count = 0
 	clearInterval(movingBallUp)
 	clearInterval(movingBallDown)
 	clearTimeout(startingToFall)
-	X = Math.floor(Math.random() * (WW - ballWidth - 10) + ballWidth + 10)
+	X = Math.floor(Math.random() * WW/2 + ballWidth)
 	Y = 50
 	$(ball).css({
 		top: "10%",
 		left:`${X}px`,
 	});
+	fallingSpeed = 0
 }
 
 
