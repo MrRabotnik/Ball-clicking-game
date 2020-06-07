@@ -7,7 +7,7 @@ var WH = $(window).height()
 var startClicked = false
 var ball = $(".ball_container");
 var Y = 50;
-var X = 550;
+var X = Math.floor(Math.random() * (WW - ballWidth - 10) + ballWidth + 10);
 var startingToFall;
 var count = 0;
 var ballWidth = $(ball).width()
@@ -58,7 +58,7 @@ function moveDown(){
 		}else if(toright == -1){
 			X -= 1
 		}
-		
+
 		comingBack = true
 //-----------------------------------------
 	}else{
@@ -93,7 +93,7 @@ function moveUp(){
 };
 
 function flyingBall(e){
-	if(count < 9){
+	if(count < 50){
 		if(startClicked){
 			if(comingBack){
 				count++
@@ -112,7 +112,6 @@ function flyingBall(e){
 			}
 		}
 	}else{
-		$('.counter').text(count)
 		$(".result").text("You won...congrats")
 		stop()
 	}
@@ -130,7 +129,7 @@ function stop(){
 		top: "10%",
 		left:"40%",
 	});
-	X = 550
+	X = Math.floor(Math.random() * (WW - ballWidth - 10) + ballWidth + 10)
 	Y = 50
 }
 
